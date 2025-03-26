@@ -1,0 +1,40 @@
+{
+  "results": [
+    {
+      "query": "After graduating from Harvard, Alexander Hamilton moved to New York, where he met George Washington and later became the first Secretary of the Treasury.",
+      "names": ["Alexander Hamilton", "George Washington"],
+      "names_ok": true
+    },
+    {
+      "query": "Emma Watson, who played Hermione in the Harry Potter movies, was recently spotted in London attending a charity event organized by Bill Gates.",
+      "names": ["Emma Watson", "Bill Gates"],
+      "names_ok": true
+    },
+    {
+      "query": "Wei Gu is an amazing Engineering Director that always knows what is going on around his project.",
+      "names": ["Wei Gu"],
+      "names_ok": true
+    },
+    {
+      "query": "Last season, we were working with Apple on a new project that was supposed to be released in the fall, but Donald Trump's administration refused to sign the contract.",
+      "names": ["Donald Trump"],
+      "names_ok": true
+    },
+    {
+      "query": "Last spring, this man named John Doe was seen in the park with his wife, Maria.",
+      "names": ["John Doe", "Maria"],
+      "names_ok": true
+    },
+    {
+      "query": "The future of the company is uncertain, but we are confident that Mary Johnson will be able to turn things around.",
+      "names": ["Mary Johnson"],
+      "names_ok": true
+    },
+    {
+      "query": "I was talking to my friend, Jane Smith, about the new project that we are working on, and she had some great ideas.",
+      "names": ["Jane Smith"],
+      "names_ok": true
+    }
+  ],
+  "ok_percentage": 100.0
+}

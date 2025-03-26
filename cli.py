@@ -2,7 +2,7 @@
 
 import argparse
 
-parser = argparse.ArgumentParser("integration_tests_parser")
+parser = argparse.ArgumentParser(prog="integration_tests_parser")
 
 
 query_type_group = parser.add_mutually_exclusive_group(required=True)

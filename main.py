@@ -7,10 +7,10 @@ import json
 from llm import llm_inference
 from cli import parser
 from prompts import NAME_EXTRACTOR_PROMPT
-from evaluations import self_check
+from evaluations import evaluate_self_check_accuracy, response_self_check_llm_version
 
 
-def save_to_json(data: list[dict]):
+def save_to_json(data: dict):
     """Take the list and save it to a JSON file
 
     Args:
@@ -20,13 +20,10 @@ def save_to_json(data: list[dict]):
         datetime=datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     )
     with open(filename, "w", encoding="utf-8") as report_file:
-        results = {
-            "results": data,
-        }
-        report_file.write(json.dumps(results))
+        report_file.write(json.dumps(data))
 
 
-def run(queries: list[str]) -> list[dict]:
+def run(queries: list[str]) -> dict:
     """Run the LLM model with the given queries
 
     Args:
@@ -50,8 +47,10 @@ def run(queries: list[str]) -> list[dict]:
         responses.append(response)
 
     # self evaluate the responses
-    self_evaluated = self_check(responses)
-    return self_evaluated
+    self_evaluated = response_self_check_llm_version(responses)
+    accuracy = evaluate_self_check_accuracy(self_evaluated)
+    results = {"results": self_evaluated, "accuracy": accuracy}
+    return results
 
 
 if __name__ == "__main__":
