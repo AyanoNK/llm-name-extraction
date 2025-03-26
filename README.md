@@ -24,6 +24,8 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
+5. Set up the AWS credentials via env vars by copying the `.env.example` file to `.env` and filling in the necessary information.
+
 ## Usage
 
 To call the function using a single sentence, use the following command:
