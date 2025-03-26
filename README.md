@@ -38,7 +38,8 @@ To call the function using a file, use the following command:
 python main.py -f "path/to/file.txt"
 ```
 
-!IMPORTANT: The file should be a .txt file.
+> [!IMPORTANT]
+> The file should be a .txt file.
 
 You can also export the output to a JSON file using the following command:
 
