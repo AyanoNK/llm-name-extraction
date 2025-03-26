@@ -16,7 +16,7 @@ query_type_group.add_argument(
 query_type_group.add_argument(
     "--list-queries",
     "-lq",
-    help=".txt file location to send to the API.",
+    help=".txt or .json file location to send to the API.",
     type=str,
 )
 
