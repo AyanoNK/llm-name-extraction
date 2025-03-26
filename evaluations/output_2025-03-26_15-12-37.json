@@ -1,0 +1,9 @@
+{
+  "results": [
+    {
+      "query": "Emma Watson, who played Hermione in the Harry Potter movies, was recently spotted in London attending a charity event organized by Bill Gates.",
+      "names": ["Emma Watson", "Bill Gates"],
+      "names_ok": true
+    }
+  ]
+}

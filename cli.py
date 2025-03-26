@@ -5,17 +5,25 @@ import argparse
 parser = argparse.ArgumentParser("integration_tests_parser")
 
 
-group = parser.add_mutually_exclusive_group(required=True)
-group.add_argument(
+query_type_group = parser.add_mutually_exclusive_group(required=True)
+query_type_group.add_argument(
     "--single-query",
     "-sq",
     help="Single query string to send to the API.",
     type=str,
 )
 
-group.add_argument(
+query_type_group.add_argument(
     "--list-queries",
     "-lq",
     help=".txt file location to send to the API.",
     type=str,
+)
+
+
+parser.add_argument(
+    "--export",
+    help="Output file to save the results.",
+    action="store_true",
+    default=False,
 )
