@@ -29,13 +29,23 @@ pip install -r requirements.txt
 To call the function using a single sentence, use the following command:
 
 ```bash
+python main.py --single-query "Robert is an amazing teacher."
+# or
 python main.py -sq "Robert is an amazing teacher."
 ```
 
 To call the function using a file, use the following command:
 
 ```bash
-python main.py -f "path/to/file.txt"
+python main.py --list-queries "path/to/file.txt"
+# or
+python main.py -lq "path/to/file.txt"
+```
+
+Get further information by running the help command
+
+```bash
+python main.py --help
 ```
 
 > [!IMPORTANT]
@@ -44,7 +54,9 @@ python main.py -f "path/to/file.txt"
 You can also export the output to a JSON file using the following command:
 
 ```bash
-python main.py -f "path/to/file.txt" --export"
+python main.py -sq "Robert is an amazing teacher." --export
+# or
+python main.py -lq "path/to/file.txt" --export
 ```
 
 The file will be saved in the `evaluations/` directory.
