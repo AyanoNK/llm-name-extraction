@@ -62,3 +62,21 @@ python main.py -lq "path/to/file.txt" --export
 ```
 
 The file will be saved in the `evaluations/` directory.
+
+## Metric explanation
+
+### Metric
+
+LLM-based accuracy metric. Based on the LLM response, the number of correct predictions divided by the total number of predictions are calculated.
+
+### Reasoning
+
+LLM based accuracy metric is used because it is a simple metric for beginner/small projects such as this one. It gives a clear indication of how well the model is performing by providing the percentage of correct predictions.
+
+In this case, the accuracy metric will tell us how many of the extracted names are correct compared to the total number of names extracted.
+
+### Shortcomings
+
+The accuracy metric does not take into account the false positives and false negatives. It treats all errors equally, which may not be the case in real-world scenarios. For example, in this case, a false positive (incorrectly extracted name) may be more severe than a false negative (missed name).
+
+Moreover, because the evaluation is done by an LLM as well, the accuracy metric may not be the best metric to use. The LLM may have a bias towards the names they know, which may not be representative of the entire dataset.
