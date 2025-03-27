@@ -2,6 +2,8 @@
 This module contains the prompts for the different tasks in the project.
 """
 
+# TODO: consider strings that could be filled with character names.\
+# These should be included in the response.
 NAME_EXTRACTOR_PROMPT = """
 Please provide the names of the people mentioned in the following sentences.
 Skip company names and other non-person names.

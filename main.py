@@ -2,6 +2,7 @@
 
 import datetime
 import json
+from collections.abc import Callable
 
 
 from llm import llm_inference
@@ -11,7 +12,6 @@ from evaluations import (
     evaluate_self_check_accuracy,
     response_self_check_llm_version,
     evaluate_correctness,
-    find_in_ground_truth,
 )
 
 
@@ -28,12 +28,18 @@ def save_to_json(data: dict):
         report_file.write(json.dumps(data))
 
 
-def run_for_txt(queries: list[str]) -> dict:
+def run_for_txt(filename: str) -> dict:
     """Run the LLM model with the given queries
 
     Args:
         queries (list[str]): List of queries to send to the LLM model
     """
+    print("Reading queries from a .txt file")
+    queries = []
+    with open(filename, "r", encoding="utf-8") as txt_file:
+        user_lines = txt_file.readlines()
+        user_lines = [query.strip() for query in user_lines if query.strip()]
+        queries = user_lines
 
     responses = []
 
@@ -62,12 +68,16 @@ def run_for_txt(queries: list[str]) -> dict:
     return results
 
 
-def run_for_json(queries: list[dict]) -> dict:
+def run_for_json(filename: str) -> dict:
     """Run the LLM model with the given queries
 
     Args:
         queries (list[str]): List of queries to send to the LLM model
     """
+    print("Reading queries from a .json file")
+
+    with open(filename, "r", encoding="utf-8") as json_file:
+        queries = json.load(json_file)
 
     responses = []
 
@@ -92,6 +102,29 @@ def run_for_json(queries: list[dict]) -> dict:
     return self_evaluated
 
 
+def run_for_str(query: str) -> dict:
+    """Run the LLM model with the given query
+
+    Args:
+        query (str): Query to send to the LLM model
+    """
+    print("Running the LLM model with a single query")
+    parsed_query = NAME_EXTRACTOR_PROMPT.format(sentence=query)
+    llm_response = llm_inference(prompt=parsed_query)
+    response_str = llm_response.get("results")[0].get("outputText")
+    response = {
+        "sentence": query,
+        "names": response_str.strip().replace('"', "").split(", "),
+    }
+    return response
+
+
+method_mapper: dict[str, Callable[[str]]] = {
+    "json": run_for_json,
+    "txt": run_for_txt,
+    "str": run_for_str,
+}
+
 if __name__ == "__main__":
     args = parser.parse_args()
     single_query = args.single_query
@@ -99,21 +132,19 @@ if __name__ == "__main__":
     export = args.export
 
     user_queries = [single_query]
+    runner_payload = single_query
 
-    if list_queries and ".txt" in list_queries:
-        print("Reading queries from a .txt file")
-        with open(list_queries, "r", encoding="utf-8") as txt_file:
-            user_queries = txt_file.readlines()
-            user_queries = [query.strip() for query in user_queries if query.strip()]
-        run_result = run_for_txt(user_queries)
+    if single_query:
+        func: Callable = method_mapper.get("str", None)
 
-    elif list_queries and ".json" in list_queries:
-        print("Reading queries from a .json file")
-        with open(list_queries, "r", encoding="utf-8") as json_file:
-            user_queries = json.load(json_file)
-        run_result = run_for_json(user_queries)
-    else:
-        raise ValueError("Please provide a valid file format (.txt or .json)")
+    elif list_queries:
+        filetype = list_queries.split(".")[-1]
+        func: Callable = method_mapper.get(filetype, None)
+        if not func:
+            raise ValueError("Please provide a valid file format (.txt or .json)")
+        runner_payload = list_queries
+
+    run_result = func(runner_payload)
 
     print(run_result)
     if export:
